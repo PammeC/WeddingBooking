@@ -1,0 +1,17 @@
+# Archivos comunes ignorados globalmente
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# Ignorar todos los archivos .env
+*.env
+
+# Ignorar carpetas de compilación
+target/
+build/
+
+# Ignorar configuraciones de IDE
+.idea/
+*.iml
+*.vscode/
