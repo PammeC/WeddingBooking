@@ -1,17 +1,17 @@
-# Archivos comunes ignorados globalmente
+# Common files to ignore globally
 *.log
 *.tmp
 *.swp
 .DS_Store
 
-# Ignorar todos los archivos .env
+# Ignore all .env files
 *.env
 
-# Ignorar carpetas de compilación
+# Ignore build folders
 target/
 build/
 
-# Ignorar configuraciones de IDE
+# Ignore IDE configurations
 .idea/
 *.iml
-*.vscode/
+.vscode/
