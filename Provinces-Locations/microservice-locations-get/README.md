@@ -21,11 +21,11 @@ npm install
 node index.js
 ### Example Query
 
-query($filter: LocationFilter) {
-  getLocations(filter: $filter) {
-    location_id
-    location_name
-    province_id
-  }
-}
+    query($filter: LocationFilter) {
+    getLocations(filter: $filter) {
+        location_id
+        location_name
+        province_id
+    }
+    }
 
