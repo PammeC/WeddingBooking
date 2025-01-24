@@ -20,7 +20,7 @@ CORS is enabled to allow the front-end application to communicate with the micro
 npm install
 node index.js
 ### Example Query
-
+    ```json
     query($filter: LocationFilter) {
     getLocations(filter: $filter) {
         location_id
