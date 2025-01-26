@@ -36,6 +36,16 @@ exports.loginUser = async (req, res) => {
       { expiresIn: '1h' }
     );
 
+    // Determinar la URL de redirección según el rol
+    let redirectUrl;
+    if (user.role === 'administrator') {
+      redirectUrl = '/admin-dashboard';
+    } else if (user.role === 'user') {
+      redirectUrl = '/user-dashboard';
+    } else {
+      redirectUrl = '/default-dashboard';
+    }
+
     // Respuesta exitosa
     res.status(200).json({
       message: 'Inicio de sesión exitoso',
@@ -46,6 +56,7 @@ exports.loginUser = async (req, res) => {
         role: user.role,
       },
       token: token, // Devuelve el token al cliente
+      redirectUrl: redirectUrl, // Devuelve la URL de redirección
     });
   } catch (error) {
     console.error(error);

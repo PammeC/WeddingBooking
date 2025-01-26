@@ -24,7 +24,7 @@ This microservice allows registering new users in the system.
     DB_NAME=user_database
     DB_PORT=3306
 
-4. Start the server: `npm start`.
+4. Start the server: `node src/server`.
 
 ## Usage
 Send a POST request to the endpoint with the following body:
