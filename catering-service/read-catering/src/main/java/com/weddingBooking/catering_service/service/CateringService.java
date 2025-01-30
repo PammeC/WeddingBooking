@@ -22,7 +22,7 @@ public class CateringService {
     }
 
     public List<Catering> searchCateringByName(String name) {
-        return cateringRepository.findByNameContaining(name);
+        return cateringRepository.findByName(name);
     }
 
 }

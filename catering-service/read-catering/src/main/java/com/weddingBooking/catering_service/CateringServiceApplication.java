@@ -3,10 +3,8 @@ package com.weddingBooking.catering_service;
 import com.weddingBooking.catering_service.repository.CateringRepository;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.graphql.data.method.annotation.Argument;
 
 @SpringBootApplication
 public class CateringServiceApplication{
@@ -30,7 +28,4 @@ public class CateringServiceApplication{
 		SpringApplication.run(CateringServiceApplication.class, args);
 
 	}
-
-
-
 }
