@@ -6,10 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class CateringController {
@@ -23,9 +21,6 @@ public class CateringController {
     }
 
     @QueryMapping
-//    public Optional<Catering> getCateringById(@Argument Long id_catering) {
-//        return cateringService.getCateringById(id_catering);
-//    }
     public Catering getCateringById(@Argument Long id_catering){
         return cateringService.getCateringById(id_catering);
     }

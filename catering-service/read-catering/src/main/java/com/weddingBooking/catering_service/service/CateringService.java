@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-//import java.util.Optional;
 
 @Service
 public class CateringService {
@@ -18,14 +17,9 @@ public class CateringService {
         return cateringRepository.findAll();
     }
 
-//    public Optional<Catering> getCateringById(Long id_catering) {
-//        return cateringRepository.findById(id_catering);
-//    }
-
     public Catering getCateringById(Long id_catering){
         return cateringRepository.findById(id_catering).orElse(null);
     }
-
 
     public List<Catering> searchCateringByName(String name) {
         return cateringRepository.findByNameContaining(name);
