@@ -3,7 +3,6 @@ package com.weddingBooking.catering_service.controller;
 import com.weddingBooking.catering_service.model.Catering;
 import com.weddingBooking.catering_service.service.CateringService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.ParameterResolutionDelegate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
