@@ -10,12 +10,14 @@ dotenv.config();
 const app = express();
 
 // Configuración de CORS
-app.use(cors({
-  origin: 'http://localhost:3000', // URL de tu frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:3000", // URL de tu frontend
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  }),
+)
 
 // Middleware para parsear JSON
 app.use(express.json());
