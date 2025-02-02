@@ -2,6 +2,7 @@ version: '3.8'
 services:
   app:
     build: .
+    image: create-decoration-service
     container_name: create-decoration-service
     env_file:
       - .env
@@ -21,5 +22,3 @@ services:
 
 networks:
   create-decoration-network:
-
-
