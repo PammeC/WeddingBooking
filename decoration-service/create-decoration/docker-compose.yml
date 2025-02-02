@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: create-decoration-service
+    env_file:
+      - .env
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+      SPRING_APPLICATION_NAME: ${SPRING_APPLICATION_NAME}
+      EUREKA_CLIENT_SERVICE_URL: ${EUREKA_CLIENT_SERVICE_URL}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
+    ports:
+      - "8041:8041"
+    networks:
+      - create-decoration-network
+
+networks:
+  create-decoration-network:
+
+
