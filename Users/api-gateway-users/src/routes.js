@@ -13,27 +13,29 @@ const {
 } = process.env;
 
 // Rutas
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
-    const response = await axios.post(`${USER_REGISTRATION_SERVICE}/api/users`, req.body);
-    res.status(response.status).json(response.data);
+    const response = await axios.post(`${USER_REGISTRATION_SERVICE}/api/users`, req.body)
+    res.status(response.status).json(response.data)
   } catch (error) {
-    res.status(error.response?.status || 500).json(error.response?.data || { message: 'Error en el servicio de registro' });
+    res
+      .status(error.response?.status || 500)
+      .json(error.response?.data || { message: "Error en el servicio de registro" })
   }
-});
+})
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
-    const response = await axios.post(`${LOGIN_SERVICE}/api/login`, req.body);
+    const response = await axios.post(`${LOGIN_SERVICE}/api/login`, req.body)
     // Asegúrate que la respuesta tenga el formato correcto
-    const { token, user } = response.data;
-    res.status(200).json({ token, user });
+    const { token, user } = response.data
+    res.status(200).json({ token, user })
   } catch (error) {
     res.status(error.response?.status || 500).json({
-      message: error.response?.data?.message || 'Error en el servicio de inicio de sesión'
-    });
+      message: error.response?.data?.message || "Error en el servicio de inicio de sesión",
+    })
   }
-});
+})
 
 router.get('/users', async (req, res) => {
   try {
