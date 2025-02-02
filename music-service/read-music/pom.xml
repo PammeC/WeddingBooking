@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.weddingBooking</groupId>
 	<artifactId>music-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>music-service</name>
 	<description>Music Service</description>
 	<url/>
