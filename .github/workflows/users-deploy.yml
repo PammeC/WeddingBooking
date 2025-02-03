@@ -13,6 +13,7 @@ jobs:
         service: ["user-registration", "get-user", "delete-user", "update-user", "login"]
         instance: [1, 2, 3, 4, 5] # Corresponde a cada instancia EC2
 
+        
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
