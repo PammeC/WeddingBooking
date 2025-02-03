@@ -3,7 +3,7 @@ const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-// Base URLs desde las variables de entorno
+// Base URLs from environment variables
 const {
   DELETE_USER_SERVICE,
   GET_USER_SERVICE,
@@ -12,30 +12,24 @@ const {
   USER_REGISTRATION_SERVICE,
 } = process.env;
 
-// Rutas
-router.post("/register", async (req, res) => {
+// Routes
+router.post('/register', async (req, res) => {
   try {
-    const response = await axios.post(`${USER_REGISTRATION_SERVICE}/api/users`, req.body)
-    res.status(response.status).json(response.data)
+    const response = await axios.post(`${USER_REGISTRATION_SERVICE}/api/register`, req.body);
+    res.status(response.status).json(response.data);
   } catch (error) {
-    res
-      .status(error.response?.status || 500)
-      .json(error.response?.data || { message: "Error en el servicio de registro" })
+    res.status(error.response?.status || 500).json(error.response?.data || { message: 'Error en el servicio de registro' });
   }
-})
+});
 
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    const response = await axios.post(`${LOGIN_SERVICE}/api/login`, req.body)
-    // Asegúrate que la respuesta tenga el formato correcto
-    const { token, user } = response.data
-    res.status(200).json({ token, user })
+    const response = await axios.post(`${LOGIN_SERVICE}/api/login`, req.body);
+    res.status(response.status).json(response.data);
   } catch (error) {
-    res.status(error.response?.status || 500).json({
-      message: error.response?.data?.message || "Error en el servicio de inicio de sesión",
-    })
+    res.status(error.response?.status || 500).json(error.response?.data || { message: 'Error en el servicio de inicio de sesión' });
   }
-})
+});
 
 router.get('/users', async (req, res) => {
   try {
@@ -74,4 +68,3 @@ router.delete('/users/:id', async (req, res) => {
 });
 
 module.exports = router;
-console.log({ DELETE_USER_SERVICE, GET_USER_SERVICE, LOGIN_SERVICE, UPDATE_USER_SERVICE, USER_REGISTRATION_SERVICE });
