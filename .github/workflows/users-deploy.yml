@@ -3,7 +3,7 @@ name: Deploy User Microservices to EC2
 on:
   push:
     branches:
-      - qa
+      - testm
 
 jobs:
   deploy:
