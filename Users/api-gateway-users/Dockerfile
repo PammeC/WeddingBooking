@@ -16,4 +16,4 @@ COPY . .
 # Exponer el puerto
 EXPOSE 4000
 # Comando para iniciar la aplicación
-CMD ["node", "src/app.js"]
+CMD ["node", "src/server.js"]
