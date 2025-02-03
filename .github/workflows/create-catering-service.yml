@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - 'catering-service/create-catering/**'
-    branches: ["test"]
+    branches: ["qa"]
   pull_request:
     paths:
       - 'catering-service/create-catering/**'
-    branches: ["qa", "main"]
+    branches: ["main"]
 
 jobs:
   build-and-test:
