@@ -47,7 +47,7 @@ The API Gateway exposes the following routes:
 
 5. Start the server:
     ```bash
-    node src/app
+    node src/server.js
 
 ## Usage
 
