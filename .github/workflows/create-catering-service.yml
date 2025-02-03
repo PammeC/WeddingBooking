@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - 'catering-service/create-catering/**'
-    branches: ["test"]
+    branches: ["qa"]
   pull_request:
     paths:
       - 'catering-service/create-catering/**'
-    branches: ["qa", "main"]
+    branches: ["main"]
 
 jobs:
   build-and-test:
@@ -105,19 +105,10 @@ jobs:
                 catering-network:
               EOL
 
-              # Reemplazar variables con secretos
-              export SERVER_PORT=${{ secrets.SERVER_PORT_CREATE_CATERING }}
-              export SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME }}
-              export EUREKA_CLIENT_SERVICE_URL=${{ secrets.EUREKA_CLIENT_SERVICE_URL }}
-              export SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
-              export SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
-              export SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-              export SPRING_JPA_DATABASE_PLATFORM=${{ secrets.SPRING_JPA_DATABASE_PLATFORM }}
-              export SPRING_JPA_HIBERNATE_DDL_AUTO=${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }}
-
-              # Detener y eliminar servicios anteriores
-              echo "Stopping existing containers..."
+              # Eliminar contenedor existente si es necesario
+              echo "Stopping and removing existing containers..."
               sudo docker-compose down || true
+              sudo docker rm -f create-catering-service || true
 
               # Iniciar servicios con docker-compose
               echo "Starting services with Docker Compose..."
