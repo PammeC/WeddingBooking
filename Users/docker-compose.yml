@@ -1,0 +1,131 @@
+version: "3.9"
+
+services:
+  api-gateway:
+    build: ./api-gateway-users
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+      user-registration-service:
+        condition: service_started
+      get-user-service:
+        condition: service_started
+      delete-user-service:
+        condition: service_started
+      update-user-service:
+        condition: service_started
+      login-service:
+        condition: service_started
+    networks:
+      - user-network
+    environment:
+      - USER_REGISTRATION_SERVICE=user-registration-service:3006
+      - GET_USER_SERVICE=get-user-service:3001
+      - DELETE_USER_SERVICE=delete-user-service:3002
+      - UPDATE_USER_SERVICE=update-user-service:3003
+      - LOGIN_SERVICE=login-service:3004
+
+  user-registration-service:
+    build: ./user-registration-service
+    ports:
+      - "3006:3006"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - user-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Pr0gr4m4c10n23
+      - DB_NAME=user_database
+      - DB_PORT=3306
+      - JWT_SECRET=my_super_secret_key
+
+  get-user-service:
+    build: ./get-user-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - user-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Pr0gr4m4c10n23
+      - DB_NAME=user_database
+      - DB_PORT=3306
+
+  delete-user-service:
+    build: ./delete-user-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - user-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Pr0gr4m4c10n23
+      - DB_NAME=user_database
+      - DB_PORT=3306
+
+  update-user-service:
+    build: ./update-user-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - user-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Pr0gr4m4c10n23
+      - DB_NAME=user_database
+      - DB_PORT=3306
+      - JWT_SECRET=my_super_secret_key
+
+  login-service:
+    build: ./login-service
+    ports:
+      - "3004:3004"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - user-network
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=Pr0gr4m4c10n23
+      - DB_NAME=user_database
+      - DB_PORT=3306
+      - JWT_SECRET=my_super_secret_key
+
+  db:
+    image: mysql:8
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=Pr0gr4m4c10n23
+      - MYSQL_DATABASE=user_database
+    networks:
+      - user-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  user-network:
+    driver: bridge

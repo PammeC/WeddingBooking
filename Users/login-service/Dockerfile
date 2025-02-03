@@ -1,20 +1,18 @@
-# Usar una imagen base oficial de Node.js
+# Usa una imagen oficial de Node.js
 FROM node:20
 
-# Establecer el directorio de trabajo dentro del contenedor
+# Establece el directorio de trabajo dentro del contenedor
 WORKDIR /usr/src/app
 
-# Copiar package.json y package-lock.json
+# Copia package.json e instala las dependencias dentro del contenedor
 COPY package*.json ./
+RUN npm install --omit=dev  # Se asegura de instalar dependencias nativas correctamente
 
-# Instalar dependencias
-RUN npm install
-
-# Copiar el resto del código
+# Copia el resto del código fuente
 COPY . .
 
-# Exponer el puerto
+# Expone el puerto del microservicio
 EXPOSE 3004
 
-# Comando para iniciar la aplicación
+# Comando de inicio
 CMD ["node", "src/server.js"]
