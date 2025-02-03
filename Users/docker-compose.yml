@@ -1,32 +1,6 @@
 version: "3.9"
 
 services:
-  api-gateway:
-    build: ./api-gateway-users
-    ports:
-      - "4000:4000"
-    depends_on:
-      db:
-        condition: service_healthy
-      user-registration-service:
-        condition: service_started
-      get-user-service:
-        condition: service_started
-      delete-user-service:
-        condition: service_started
-      update-user-service:
-        condition: service_started
-      login-service:
-        condition: service_started
-    networks:
-      - user-network
-    environment:
-      - USER_REGISTRATION_SERVICE=user-registration-service:3006
-      - GET_USER_SERVICE=get-user-service:3001
-      - DELETE_USER_SERVICE=delete-user-service:3002
-      - UPDATE_USER_SERVICE=update-user-service:3003
-      - LOGIN_SERVICE=login-service:3004
-
   user-registration-service:
     build: ./user-registration-service
     ports:
