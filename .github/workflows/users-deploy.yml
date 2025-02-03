@@ -20,7 +20,7 @@ jobs:
       - name: Set up SSH
         uses: shimataro/ssh-deploy-action@v2
         with:
-          host: ${{ secrets["EC2_IP_instance" + matrix.instance] }} # Corrección aquí
+          host: ${{ secrets["EC2_IP_instance1" + matrix.instance] }} # Corrección aquí
           username: ${{ secrets.EC2_USER }} # Usuario EC2 (secreto de GitHub)
           key: ${{ secrets.EC2_PRIVATE_KEY }} # Clave privada EC2 (secreto de GitHub)
           remote_dir: /home/${{ secrets.EC2_USER }}/user-microservices-${{ matrix.service }} # Directorio en EC2
