@@ -34,6 +34,7 @@ services:
       - DB_NAME=user_database
       - DB_PORT=3306
 
+
   delete-user-service:
     build: ./delete-user-service
     ports:
