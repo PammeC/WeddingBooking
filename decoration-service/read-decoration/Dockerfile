@@ -4,3 +4,4 @@ COPY ${JAR_FILE} read-decoration-service.jar
 COPY .env .env
 EXPOSE 8042
 ENTRYPOINT ["java","-jar","read-decoration-service.jar"]
+

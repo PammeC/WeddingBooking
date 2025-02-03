@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  create-decoration:
+  create-photography:
     build: 
-      context: ./create-decoration
+      context: ./create-photography
 
-    image: create-decoration-service
+    image: create-photography-service
 
-    container_name: create-decoration-service
+    container_name: create-photography-service
 
     env_file:
-      - ./create-decoration/.env
+      - ./create-photography/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -21,20 +21,20 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8041:8041"
+      - "8051:8051"
     networks:
-      - decoration-network
+      - photography-network
 
-  read-decoration:
+  read-photography:
     build: 
-      context: ./read-decoration
+      context: ./read-photography
 
-    image: read-decoration-service
+    image: read-photography-service
 
-    container_name: read-decoration-service
+    container_name: read-photography-service
 
     env_file:
-      - ./read-decoration/.env
+      - ./read-photography/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -46,20 +46,20 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8042:8042"
+      - "8052:8052"
     networks:
-      - decoration-network
+      - photography-network
 
-  update-decoration:
+  update-photography:
     build: 
-      context: ./update-decoration
+      context: ./update-photography
 
-    image: update-decoration-service
+    image: update-photography-service
 
-    container_name: update-decoration-service
+    container_name: update-photography-service
 
     env_file:
-      - ./update-decoration/.env
+      - ./update-photography/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -71,21 +71,21 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8043:8043"
+      - "8053:8053"
     networks:
-      - decoration-network
+      - photography-network
 
 
-  delete-decoration:
+  delete-photography:
     build: 
-      context: ./delete-decoration
+      context: ./delete-photography
 
-    image: delete-decoration-service
+    image: delete-photography-service
 
-    container_name: delete-decoration-service
+    container_name: delete-photography-service
 
     env_file:
-      - ./delete-decoration/.env
+      - ./delete-photography/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -95,11 +95,11 @@ services:
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO} 
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8044:8044"
+      - "8054:8054"
     networks:
-      - decoration-network
+      - photography-network
 
 networks:
-  decoration-network:
+  photography-network:

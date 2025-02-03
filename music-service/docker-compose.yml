@@ -1,15 +1,15 @@
 version: '3.8'
 services:
-  create-decoration:
+  create-music:
     build: 
-      context: ./create-decoration
+      context: ./create-music
 
-    image: create-decoration-service
+    image: create-music-service
 
-    container_name: create-decoration-service
+    container_name: create-music-service
 
     env_file:
-      - ./create-decoration/.env
+      - ./create-music/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -21,20 +21,20 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8041:8041"
+      - "8061:8061"
     networks:
-      - decoration-network
+      - music-network
 
-  read-decoration:
+  read-music:
     build: 
-      context: ./read-decoration
+      context: ./read-music
 
-    image: read-decoration-service
+    image: read-music-service
 
-    container_name: read-decoration-service
+    container_name: read-music-service
 
     env_file:
-      - ./read-decoration/.env
+      - ./read-music/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -46,20 +46,20 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8042:8042"
+      - "8062:8062"
     networks:
-      - decoration-network
+      - music-network
 
-  update-decoration:
+  update-music:
     build: 
-      context: ./update-decoration
+      context: ./update-music
 
-    image: update-decoration-service
+    image: update-music-service
 
-    container_name: update-decoration-service
+    container_name: update-music-service
 
     env_file:
-      - ./update-decoration/.env
+      - ./update-music/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -71,21 +71,21 @@ services:
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
       SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8043:8043"
+      - "8063:8063"
     networks:
-      - decoration-network
+      - music-network
 
 
-  delete-decoration:
+  delete-music:
     build: 
-      context: ./delete-decoration
+      context: ./delete-music
 
-    image: delete-decoration-service
+    image: delete-music-service
 
-    container_name: delete-decoration-service
+    container_name: delete-music-service
 
     env_file:
-      - ./delete-decoration/.env
+      - ./delete-music/.env
       
     environment:
       SERVER_PORT: ${SERVER_PORT}
@@ -95,11 +95,11 @@ services:
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_DATABASE_PLATFORM: ${SPRING_JPA_DATABASE_PLATFORM}
-      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO} 
+      SPRING_JPA_HIBERNATE_DDL_AUTO: ${SPRING_JPA_HIBERNATE_DDL_AUTO}
     ports:
-      - "8044:8044"
+      - "8064:8064"
     networks:
-      - decoration-network
+      - music-network
 
 networks:
-  decoration-network:
+  music-network:
