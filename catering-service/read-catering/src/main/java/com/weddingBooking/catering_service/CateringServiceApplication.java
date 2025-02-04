@@ -15,5 +15,6 @@ public class CateringServiceApplication{
 
 		SpringApplication.run(CateringServiceApplication.class, args);
 
+		
 	}
 }
