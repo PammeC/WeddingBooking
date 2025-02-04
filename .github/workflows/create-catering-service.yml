@@ -30,7 +30,6 @@ jobs:
       - name: Rename JAR file
         run: |
           mv ./catering-service/create-catering/target/catering-service-0.0.1.jar ./catering-service/create-catering/create-catering-service.jar
-
   dockerize-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -45,15 +44,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Remove old Docker images locally
-        run: |
-          docker images | grep '${{ secrets.DOCKER_USERNAME }}/create-catering-service' | awk '{print $3}' | xargs -r docker rmi -f
-
       - name: Build and Push Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest ./catering-service/create-catering
           docker push ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.8
         with:
@@ -71,36 +65,29 @@ jobs:
                 sudo systemctl enable docker
                 sudo usermod -a -G docker $(whoami)
               fi
-
-              # Detener y eliminar cualquier contenedor en ejecución
+              # Detener y eliminar cualquier contenedor en ejecución con el mismo nombre
               echo "Stopping and removing existing container..."
               sudo docker stop create-catering-service || true
               sudo docker rm create-catering-service || true
-
-              # Eliminar todas las imágenes antiguas con el mismo nombre
-              echo "Removing old Docker images..."
-              sudo docker images | grep 'create-catering-service' | awk '{print $3}' | xargs -r sudo docker rmi -f
-
-              # Descargar la última versión de la imagen
+              # Eliminar imagen antigua
+              echo "Removing old Docker image..."
+              sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest || true
+              # Descargar nueva imagen
               echo "Pulling latest Docker image..."
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest
-
               # Ejecutar nuevo contenedor
               echo "Starting new container..."
               sudo docker run -d \
                 --name create-catering-service \
                 -p 8071:8071 \
-                -e SERVER_PORT=8071 \
-                -e SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME} \
-                -e EUREKA_CLIENT_SERVICE_URL=${EUREKA_CLIENT_SERVICE_URL} \
-                -e SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL} \
-                -e SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME} \
-                -e SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD} \
-                -e SPRING_JPA_DATABASE_PLATFORM=${SPRING_JPA_DATABASE_PLATFORM} \
-                -e SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO} \
+                -e SERVER_PORT=${{ secrets.SERVER_PORT_CREATE_CATERING }} \
+                -e SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME }} \
+                -e EUREKA_CLIENT_SERVICE_URL=${{ secrets.EUREKA_CLIENT_SERVICE_URL }} \
+                -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
+                -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+                -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+                -e SPRING_JPA_DATABASE_PLATFORM=${{ secrets.SPRING_JPA_DATABASE_PLATFORM }} \
+                -e SPRING_JPA_HIBERNATE_DDL_AUTO=${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }} \
                 --restart=always \
-                ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest
-
-              # Verificar contenedor corriendo
-              echo "Checking running containers..."
-              sudo docker ps -a
+                pammec/create-catering-service:latest
+                
