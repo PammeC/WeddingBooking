@@ -86,7 +86,7 @@ jobs:
               sudo docker run -d \
                 --name create-catering-service \
                 -p 8071:8071 \
-                -e SERVER_PORT=${SERVER_PORT_CREATE_CATERING} \
+                -e SERVER_PORT=8071 \
                 -e SPRING_APPLICATION_NAME=${SPRING_APPLICATION_NAME} \
                 -e EUREKA_CLIENT_SERVICE_URL=${EUREKA_CLIENT_SERVICE_URL} \
                 -e SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL} \
