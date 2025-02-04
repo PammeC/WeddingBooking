@@ -45,6 +45,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Remove old Docker images locally
+        run: |
+          docker images | grep '${{ secrets.DOCKER_USERNAME }}/create-catering-service' | awk '{print $3}' | xargs -r docker rmi -f
+
       - name: Build and Push Docker Image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest ./catering-service/create-catering
@@ -68,16 +72,16 @@ jobs:
                 sudo usermod -a -G docker $(whoami)
               fi
 
-              # Detener y eliminar cualquier contenedor en ejecución con el mismo nombre
+              # Detener y eliminar cualquier contenedor en ejecución
               echo "Stopping and removing existing container..."
               sudo docker stop create-catering-service || true
               sudo docker rm create-catering-service || true
 
-              # Eliminar imagen antigua
-              echo "Removing old Docker image..."
-              sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest || true
+              # Eliminar todas las imágenes antiguas con el mismo nombre
+              echo "Removing old Docker images..."
+              sudo docker images | grep 'create-catering-service' | awk '{print $3}' | xargs -r sudo docker rmi -f
 
-              # Descargar nueva imagen
+              # Descargar la última versión de la imagen
               echo "Pulling latest Docker image..."
               sudo docker pull ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest
 
@@ -96,3 +100,7 @@ jobs:
                 -e SPRING_JPA_HIBERNATE_DDL_AUTO=${SPRING_JPA_HIBERNATE_DDL_AUTO} \
                 --restart=always \
                 ${{ secrets.DOCKER_USERNAME }}/create-catering-service:latest
+
+              # Verificar contenedor corriendo
+              echo "Checking running containers..."
+              sudo docker ps -a
