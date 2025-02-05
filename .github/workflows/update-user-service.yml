@@ -42,18 +42,18 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/update-user-service:latest ./Users/update-user-service
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/update-user-service-1:latest ./Users/update-user-service
       
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/update-user-service:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/update-user-service-1:latest
       
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST_UPDATE }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY_M }}
           port: 22
           script: |
               # Instalar Docker si no está instalado
@@ -78,7 +78,7 @@ jobs:
               services:
                 update-user-service:
                   image: ${{ secrets.DOCKER_HUB_USERNAME }}/update-user-service:latest
-                  container_name: update-user-service
+                  container_name: update-user-service-1
                   environment:
                     PORT: ${{ secrets.PORT3000 }}
                     DB_HOST: ${{ secrets.DB_HOST }}

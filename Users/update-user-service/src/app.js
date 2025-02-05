@@ -10,6 +10,4 @@ app.use(bodyParser.json());
 // Rutas
 app.use('/api', userRoutes);
 
-
-
 module.exports = app;
