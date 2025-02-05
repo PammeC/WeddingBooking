@@ -2,7 +2,7 @@ name: Docker Compose CI/CD for Delete User Service
 on:
   push:
     paths:
-      - 'delete-user-service/**'
+      - 'Users/delete-user-service/**'
     branches: ["testm"]
 
 jobs:
