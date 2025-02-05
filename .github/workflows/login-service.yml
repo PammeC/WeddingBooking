@@ -1,0 +1,125 @@
+name: Docker Compose CI/CD for Login Service
+
+on:
+  push:
+    paths:
+      - 'Users/login-service/**'
+    branches: ["testm"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./login-service
+      
+      - name: Verify Installation
+        run: |
+          npm list
+          ls -la
+        working-directory: ./login-service
+
+  dockerize-and-deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/login-service:latest ./login-service
+      
+      - name: Push Docker Image to Docker Hub
+        run: |
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/login-service:latest
+      
+      - name: Deploy with Docker Compose
+        uses: appleboy/ssh-action@v0.1.8
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          PORT: ${{ secrets.PORT3004 }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        with:
+          host: ${{ secrets.EC2_HOST_LOGIN }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY_M }}
+          port: 22
+          envs: DOCKER_HUB_USERNAME,PORT,DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,DB_PORT,JWT_SECRET
+          script: |
+              # Verificar si Docker está instalado
+              if ! command -v docker &> /dev/null; then
+                echo "==> Installing Docker"
+                sudo apt-get update -y
+                sudo apt-get install -y docker.io
+                sudo systemctl start docker
+                sudo systemctl enable docker
+                sudo usermod -a -G docker $(whoami)
+              else
+                echo "Docker is already installed"
+              fi
+
+              # Verificar si Docker Compose está instalado
+              if ! command -v docker-compose &> /dev/null; then
+                echo "==> Installing Docker Compose"
+                sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                sudo chmod +x /usr/local/bin/docker-compose
+              else
+                echo "Docker Compose is already installed"
+              fi
+
+              echo "Creating docker-compose.yml..."
+              cat > docker-compose.yml <<EOL
+              version: '3.8'
+              services:
+                login-service:
+                  image: ${DOCKER_HUB_USERNAME}/login-service:latest
+                  container_name: login-service
+                  environment:
+                    PORT: ${PORT}
+                    DB_HOST: ${DB_HOST}
+                    DB_USER: ${DB_USER}
+                    DB_PASSWORD: ${DB_PASSWORD}
+                    DB_NAME: ${DB_NAME}
+                    DB_PORT: ${DB_PORT}
+                    JWT_SECRET: ${JWT_SECRET}
+                  ports:
+                    - "${PORT}:${PORT}"
+                  networks:
+                    - login-network
+              networks:
+                login-network:
+              EOL
+
+              # Eliminar contenedores existentes
+              echo "Stopping and removing existing containers..."
+              sudo docker-compose down || true
+              sudo docker rm -f login-service || true
+              sudo docker rmi -f ${DOCKER_HUB_USERNAME}/login-service:latest || true
+
+              # Iniciar servicios
+              echo "Starting services with Docker Compose..."
+              sudo docker-compose up -d
+
+              # Verificar estado
+              echo "Verifying services..."
+              sudo docker-compose ps
