@@ -42,7 +42,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/login-service-1:latest ./login-service
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/login-service-1:latest ./Users/login-service
       
       - name: Push Docker Image to Docker Hub
         run: |
@@ -113,8 +113,8 @@ jobs:
               # Eliminar contenedores existentes
               echo "Stopping and removing existing containers..."
               sudo docker-compose down || true
-              sudo docker rm -f login-service || true
-              sudo docker rmi -f ${DOCKER_HUB_USERNAME}/login-service:latest || true
+              sudo docker rm -f login-service-1 || true
+              sudo docker rmi -f ${DOCKER_HUB_USERNAME}/login-service-1:latest || true
 
               # Iniciar servicios
               echo "Starting services with Docker Compose..."
