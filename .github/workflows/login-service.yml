@@ -42,11 +42,11 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/login-service:latest ./login-service
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/login-service-1:latest ./login-service
       
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/login-service:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/login-service-1:latest
       
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.8
@@ -92,8 +92,8 @@ jobs:
               version: '3.8'
               services:
                 login-service:
-                  image: ${DOCKER_HUB_USERNAME}/login-service:latest
-                  container_name: login-service
+                  image: ${DOCKER_HUB_USERNAME}/login-service-1:latest
+                  container_name: login-service-1
                   environment:
                     PORT: ${PORT}
                     DB_HOST: ${DB_HOST}
