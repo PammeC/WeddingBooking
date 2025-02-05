@@ -72,7 +72,7 @@ jobs:
                   image: ${{ secrets.DOCKER_USERNAME }}/delete-user-service-1:latest
                   container_name: delete-user-service-1
                   environment:
-                    PORT: ${{ secrets.PORT3006 }}
+                    PORT: ${{ secrets.PORT3002 }}
                     DB_HOST: ${{ secrets.DB_HOST }}
                     DB_USER: ${{ secrets.DB_USER }}
                     DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
