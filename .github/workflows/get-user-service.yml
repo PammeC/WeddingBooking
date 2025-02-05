@@ -42,10 +42,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/get-user-service:latest ./Users/get-user-service
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/get-user-service-1:latest ./Users/get-user-service
       
       - name: Push Docker Image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/get-user-service:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/get-user-service-1:latest
       
       - name: Deploy with SSH
         uses: appleboy/ssh-action@v1.0.0
@@ -64,8 +64,8 @@ jobs:
             version: '3.8'
             services:
               get-user:
-                image: ${{ secrets.DOCKER_USERNAME }}/get-user-service:latest
-                container_name: get-user-service
+                image: ${{ secrets.DOCKER_USERNAME }}/get-user-service-1:latest
+                container_name: get-user-service-1
                 environment:
                   PORT: ${{ secrets.PORT3001 }}
                   DB_HOST: ${{ secrets.DB_HOST }}
@@ -84,7 +84,7 @@ jobs:
             
             # Detener y eliminar contenedores existentes
             docker-compose down || true
-            docker rm -f get-user-service || true
+            docker rm -f get-user-service-1 || true
             
             # Iniciar servicios
             docker-compose up -d
