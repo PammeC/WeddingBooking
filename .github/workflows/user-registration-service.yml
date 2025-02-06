@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'Users/user-registration-service/**'
-    branches: ["main"]
+    branches: ["testm"]
 
 jobs:
   build-and-test:
