@@ -9,6 +9,7 @@ public class CateringServiceApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(CateringServiceApplication.class, args);
+
 		
 	}
 
