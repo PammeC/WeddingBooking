@@ -82,7 +82,7 @@ jobs:
                 -p 8041:8041 \
                 -e SERVER_PORT=${{ secrets.SERVER_PORT_CREATE_DECORATION }} \
                 -e SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME_CREATE_DECORATION }} \
-                -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
+                -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_DECORATION }} \
                 -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
                 -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
                 -e SPRING_JPA_DATABASE_PLATFORM=${{ secrets.SPRING_JPA_DATABASE_PLATFORM }} \
