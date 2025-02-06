@@ -42,11 +42,11 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/user-registration-service:latest ./Users/user-registration-service
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/user-registration-service-1:latest ./Users/user-registration-service
       
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/user-registration-service:latest
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/user-registration-service-1:latest
       
       - name: Deploy with Docker Compose
         uses: appleboy/ssh-action@v0.1.8
