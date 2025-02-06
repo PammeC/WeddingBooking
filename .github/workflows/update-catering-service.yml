@@ -82,6 +82,8 @@ jobs:
                 -p 8073:8073 \
                 -e SERVER_PORT=${{ secrets.SERVER_PORT_UPDATE_CATERING }} \
                 -e SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME_UPDATE }} \
+                -e EUREKA_CLIENT_SERVICE_URL=${{ secrets.EUREKA_CLIENT_SERVICE_URL }} \
+
                 -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
                 -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
                 -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
