@@ -10,5 +10,6 @@ public class DecorationServiceApplication {
 
 		SpringApplication.run(DecorationServiceApplication.class, args);
 	}
+	
 
 }
