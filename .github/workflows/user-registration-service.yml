@@ -78,7 +78,7 @@ jobs:
               services:
                 user-registration-service:
                   image: ${{ secrets.DOCKER_HUB_USERNAME }}/user-registration-service-1:latest
-                  container_name: user-registration-service
+                  container_name: user-registration-service-1
                   environment:
                     PORT: ${{ secrets.PORT3006 }}
                     DB_HOST: ${{ secrets.DB_HOST }}
