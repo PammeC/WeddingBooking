@@ -51,7 +51,7 @@ jobs:
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.EC2_HOST_DELETE_CATERING }}
+          host: ${{ secrets.EC2_HOST_CATERING }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
@@ -83,7 +83,7 @@ jobs:
                 -e SERVER_PORT=${{ secrets.SERVER_PORT_DELETE_CATERING }} \
                 -e SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME_DELETE }} \
                 -e EUREKA_CLIENT_SERVICE_URL=${{ secrets.EUREKA_CLIENT_SERVICE_URL }} \
-                -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }} \
+                -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_CATERING }} \
                 -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
                 -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
                 -e SPRING_JPA_DATABASE_PLATFORM=${{ secrets.SPRING_JPA_DATABASE_PLATFORM }} \
