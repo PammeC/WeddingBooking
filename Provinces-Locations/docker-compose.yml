@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  microservice-locations-create:
+    build: ./microservice-locations-create
+    ports:
+      - "4003:4003"
+    networks:
+      - provinces-locations-network
+    environment:
+      - DB_HOST=${DB_HOST_L_P}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME_L_P}
+      - DB_PORT=3306
+      - RABBITMQ_URL=${RABBITMQ_URL}
+
+  microservice-locations-delete:
+    build: ./microservice-locations-delete
+    networks:
+      - provinces-locations-network
+    environment:
+      - DB_HOST=${DB_HOST_L_P}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME_L_P}
+      - DB_PORT=3306
+      - RABBITMQ_URL=${RABBITMQ_URL}
+
+  microservice-provinces-get:
+    build: ./microservice-provinces-get
+    ports:
+      - "4001:4001"
+    networks:
+      - provinces-locations-network
+    environment:
+      - DB_HOST=${DB_HOST_L_P}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME_L_P}
+      - DB_PORT=3306
+      - RABBITMQ_URL=${RABBITMQ_URL}
+
+  microservice-provinces-delete:
+    build: ./microservice-provinces-delete
+    ports:
+      - "4000:4000"
+    networks:
+      - provinces-locations-network
+    environment:
+      - DB_HOST=${DB_HOST_L_P}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME_L_P}
+      - DB_PORT=3306
+      - RABBITMQ_URL=${RABBITMQ_URL}
+
+networks:
+  provinces-locations-network:
+    driver: bridge
