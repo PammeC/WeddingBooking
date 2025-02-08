@@ -9,6 +9,7 @@ async function startServer() {
   // Habilitar CORS
   app.use(cors());
 
+  
   const server = new ApolloServer({
     typeDefs,
     resolvers,
