@@ -6,7 +6,7 @@ services:
     networks:
       - provincesLocations-network
     environment:
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_L_P}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
@@ -20,7 +20,7 @@ services:
     networks:
       - provincesLocations-network
     environment:
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_L_P}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
@@ -34,7 +34,7 @@ services:
     networks:
       - provincesLocations-network
     environment:
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_L_P}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
@@ -48,7 +48,7 @@ services:
     networks:
       - provincesLocations-network
     environment:
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_L_P}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
@@ -62,7 +62,7 @@ services:
     networks:
       - provincesLocations-network
     environment:
-      - DB_HOST=${DB_HOST}
+      - DB_HOST=${DB_HOST_L_P}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
