@@ -37,7 +37,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/provinces-delete-service:latest ./microservice-provinces-delete
+        run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/provinces-delete-service:latest ./Provinces-Locations/microservice-provinces-delete
       - name: Push Docker Image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/provinces-delete-service:latest
       - name: Deploy with Docker Compose
