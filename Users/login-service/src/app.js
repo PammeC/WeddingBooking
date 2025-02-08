@@ -8,7 +8,7 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 
-// Rutas
+// Rutes
 app.use('/api', authRoutes);
 
 module.exports = app;
