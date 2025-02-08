@@ -45,7 +45,7 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST_PROVINCES_GET }}
           username: ${{ secrets.EC2_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
+          key: ${{ secrets.EC2_SSH_KEY_M }}
           port: 22
           script: |
             # Instalar Docker si no está instalado
