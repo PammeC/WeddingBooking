@@ -69,17 +69,18 @@ services:
       - DB_PORT=3306
       - RABBITMQ_URL=${RABBITMQ_URL}
 
-  mysql:
-    image: mysql:8.0
+  postgres:
+    image: postgres:15
     ports:
-      - "3306:3306"
+      - "5432:5432"
     networks:
       - provincesLocations-network
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_NAME_L_P}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME_L_P}
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management
