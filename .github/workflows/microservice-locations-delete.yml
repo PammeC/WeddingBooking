@@ -1,4 +1,4 @@
-name: Docker Compose CI/CD for Locations Delete Service
+name: Docker CI/CD for Locations Delete Service
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest ./Provinces-Locations/microservice-locations-delete
       - name: Push Docker Image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest
-      - name: Deploy with Docker Compose
+      - name: Deploy to EC2 (Without Docker Compose)
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST_LOCATIONS_DELETE }}
@@ -48,38 +48,41 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY_M }}
           port: 22
           script: |
-            # Install Docker if not installed
+            set -e  # Detener ejecución si hay errores
+
+            echo "==> Verificando e instalando Docker..."
             if ! command -v docker &> /dev/null; then
-              echo "==> Installing Docker"
+              echo "==> Instalando Docker..."
               sudo apt-get update -y
               sudo apt-get install -y docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
-              sudo usermod -a -G docker $(whoami)
+              sudo usermod -aG docker $USER
             fi
-            # Detener y eliminar contenedores previos correctamente
-            echo "Deteniendo y eliminando contenedores previos..."
+
+            echo "==> Deteniendo y eliminando contenedor anterior..."
             sudo docker stop locations-delete-service || true
             sudo docker rm locations-delete-service || true
-            sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest:latest || true
 
-            # Descargar la última versión de la imagen
-            echo "Descargando la última imagen de Docker..."
-            sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest:latest
+            echo "==> Eliminando imagen antigua..."
+            sudo docker rmi ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest || true
+            sudo docker system prune -f
 
-            # Ejecutar contenedor con las variables secretas
-            echo "Desplegando el servicio con Docker..."
+            echo "==> Descargando nueva imagen desde Docker Hub..."
+            sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest
+
+            echo "==> Ejecutando nuevo contenedor..."
             sudo docker run -d \
               --name locations-delete-service \
-              -e DB_HOST_L_P=${{ secrets.DB_HOST_L_P }} \
+              -p 4002:4002 \
+              -e PORT=4002 \
+              -e DB_HOST=${{ secrets.DB_HOST_L_P }} \
               -e DB_USER=${{ secrets.DB_USER_L_P }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-              -e DB_NAME_L_P=${{ secrets.DB_NAME_L_P }} \
+              -e DB_NAME=${{ secrets.DB_NAME_L_P }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \
               --restart always \
-              ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest:latest
+              ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest
 
-            # Verificar si el contenedor está corriendo
-            echo "Verificando contenedor en ejecución..."
-            sudo docker ps | grep locations-delete-service
-            
+            echo "==> Verificando estado del contenedor..."
+            sudo docker ps -a | grep locations-delete-service
