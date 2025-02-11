@@ -80,6 +80,7 @@ jobs:
               -e DB_USER=${{ secrets.DB_USER_L_P }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e DB_NAME=${{ secrets.DB_NAME_L_P }} \
+              -e RABBITMQ_URL=${{ secrets.RABBITMQ_URL }} \
               -e DB_PORT=${{ secrets.DB_PORT }} \
               --restart always \
               ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest
