@@ -4,6 +4,7 @@ const { typeDefs, resolvers } = require('./schema');
 const cors = require('cors');
 
 
+
 async function startServer() {
   try {
     const app = express();
