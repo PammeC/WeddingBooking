@@ -8,10 +8,10 @@ services:
     networks:
       - provinces-locations-network
     environment:
-      - DB_HOST=${DB_HOST_L_P}
+      - DB_HOST_L_P=${DB_HOST_L_P}
       - DB_USER=${DB_USER_L_P}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME_L_P}
+      - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
       - RABBITMQ_URL=${RABBITMQ_URL}
 
@@ -22,10 +22,10 @@ services:
     networks:
       - provinces-locations-network
     environment:
-      - DB_HOST=${DB_HOST_L_P}
+      - DB_HOST_L_P=${DB_HOST_L_P}
       - DB_USER=${DB_USER_L_P}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME_L_P}
+      - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
       - RABBITMQ_URL=${RABBITMQ_URL}
 
@@ -34,10 +34,10 @@ services:
     networks:
       - provinces-locations-network
     environment:
-      - DB_HOST=${DB_HOST_L_P}
+      - DB_HOST_L_P=${DB_HOST_L_P}
       - DB_USER=${DB_USER_L_P}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME_L_P}
+      - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
       - RABBITMQ_URL=${RABBITMQ_URL}
 
@@ -48,10 +48,10 @@ services:
     networks:
       - provinces-locations-network
     environment:
-      - DB_HOST=${DB_HOST_L_P}
+      - DB_HOST_L_P=${DB_HOST_L_P}
       - DB_USER=${DB_USER_L_P}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME_L_P}
+      - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
       - RABBITMQ_URL=${RABBITMQ_URL}
 
@@ -62,10 +62,10 @@ services:
     networks:
       - provinces-locations-network
     environment:
-      - DB_HOST=${DB_HOST_L_P}
+      - DB_HOST_L_P=${DB_HOST_L_P}
       - DB_USER=${DB_USER_L_P}
       - DB_PASSWORD=${DB_PASSWORD}
-      - DB_NAME=${DB_NAME_L_P}
+      - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
       - RABBITMQ_URL=${RABBITMQ_URL}
 
