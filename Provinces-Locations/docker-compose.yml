@@ -13,7 +13,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
-      - RABBITMQ_URL=${RABBITMQ_URL}
+      - RABBITMQ_URL=rabbitmq:5672  # Corregido
 
   microservice-locations-get:
     build: ./microservice-locations-get
@@ -27,7 +27,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
-      - RABBITMQ_URL=${RABBITMQ_URL}
+      - RABBITMQ_URL=rabbitmq:5672  # Corregido
 
   microservice-locations-delete:
     build: ./microservice-locations-delete
@@ -39,7 +39,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
-      - RABBITMQ_URL=${RABBITMQ_URL}
+      - RABBITMQ_URL=rabbitmq:5672  # Corregido
 
   microservice-provinces-get:
     build: ./microservice-provinces-get
@@ -53,7 +53,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
-      - RABBITMQ_URL=${RABBITMQ_URL}
+      - RABBITMQ_URL=rabbitmq:5672  # Corregido
 
   microservice-provinces-delete:
     build: ./microservice-provinces-delete
@@ -67,7 +67,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
-      - RABBITMQ_URL=${RABBITMQ_URL}
+      - RABBITMQ_URL=rabbitmq:5672  # Corregido
 
   rabbitmq:
     image: rabbitmq:3-management

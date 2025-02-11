@@ -14,6 +14,7 @@ async function startServer() {
     resolvers,
   });
 
+  
   await server.start();
   server.applyMiddleware({ app, path: '/graphql' });
 
