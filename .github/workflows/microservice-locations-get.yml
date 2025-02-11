@@ -57,41 +57,30 @@ jobs:
               sudo systemctl enable docker
               sudo usermod -a -G docker $(whoami)
             fi
-            # Instalar Docker Compose si no está instalado
-            if ! command -v docker-compose &> /dev/null; then
-              echo "==> Installing Docker Compose"
-              sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
-            fi
-            # Crear archivo docker-compose.yml dinámicamente con las variables secretas
-            echo "Creating docker-compose.yml..."
-            cat > docker-compose.yml <<EOL
-            version: '3.8'
-            services:
-              locations-get-service:
-                image: ${{ secrets.DOCKER_HUB_USERNAME }}/locations-get-service:latest
-                container_name: locations-get-service
-                environment:
-                  PORT: 4002
-                  DB_HOST: ${{ secrets.DB_HOST_L_P }}
-                  DB_USER: ${{ secrets.DB_USER_L_P }}
-                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                  DB_NAME_L_P: ${{ secrets.DB_NAME_L_P }}
-                  RABBITMQ_URL: ${{ secrets.RABBITMQ_URL }}
-                ports:
-                  - "4002:4002"
-                networks:
-                  - locations-get-network
-            networks:
-              locations-get-network:
-            EOL
-            # Detener y eliminar servicios anteriores
-            echo "Stopping existing containers..."
-            sudo docker-compose down || true
-            sudo docker rm -f locations-get-service || true
-            # Iniciar servicios con docker-compose
-            echo "Starting services with Docker Compose..."
-            sudo docker-compose up -d
+                        # Detener y eliminar contenedores previos correctamente
+            echo "Deteniendo y eliminando contenedores previos..."
+            sudo docker stop locations-get-service || true
+            sudo docker rm locations-get-service || true
+            sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/locations-get-service:latest || true
+
+            # Descargar la última versión de la imagen
+            echo "Descargando la última imagen de Docker..."
+            sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/locations-get-service:latest
+
+            # Ejecutar contenedor con las variables secretas
+            echo "Desplegando el servicio con Docker..."
+            sudo docker run -d \
+              --name locations-get-service \
+              -p 4002:4002 \
+              -e PORT=4002 \
+              -e DB_HOST_L_P=${{ secrets.DB_HOST_L_P }} \
+              -e DB_USER=${{ secrets.DB_USER_L_P }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_NAME_L_P=${{ secrets.DB_NAME_L_P }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              --restart always \
+              ${{ secrets.DOCKER_HUB_USERNAME }}/locations-get-service:latest
+
             # Verificar si el contenedor está corriendo
-            echo "Verifying services..."
-            sudo docker-compose ps
+            echo "Verificando contenedor en ejecución..."
+            sudo docker ps | grep locations-get-service

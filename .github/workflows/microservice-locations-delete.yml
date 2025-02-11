@@ -57,38 +57,29 @@ jobs:
               sudo systemctl enable docker
               sudo usermod -a -G docker $(whoami)
             fi
-            # Install Docker Compose if not installed
-            if ! command -v docker-compose &> /dev/null; then
-              echo "==> Installing Docker Compose"
-              sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
-            fi
-            # Create docker-compose.yml dynamically with secret variables
-            echo "Creating docker-compose.yml..."
-            cat > docker-compose.yml <<EOL
-            version: '3.8'
-            services:
-              locations-delete-service:
-                image: ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest
-                container_name: locations-delete-service
-                environment:
-                  DB_HOST: ${{ secrets.DB_HOST_L_P }}
-                  DB_USER: ${{ secrets.DB_USER_L_P }}
-                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                  DB_NAME_L_P: ${{ secrets.DB_NAME_L_P }}
-                  RABBITMQ_URL: ${{ secrets.RABBITMQ_URL }}
-                networks:
-                  - locations-delete-network
-            networks:
-              locations-delete-network:
-            EOL
-            # Stop and remove previous services
-            echo "Stopping existing containers..."
-            sudo docker-compose down || true
-            sudo docker rm -f locations-delete-service || true
-            # Start services with docker-compose
-            echo "Starting services with Docker Compose..."
-            sudo docker-compose up -d
-            # Verify if container is running
-            echo "Verifying services..."
-            sudo docker-compose ps
+            # Detener y eliminar contenedores previos correctamente
+            echo "Deteniendo y eliminando contenedores previos..."
+            sudo docker stop locations-delete-service || true
+            sudo docker rm locations-delete-service || true
+            sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest:latest || true
+
+            # Descargar la última versión de la imagen
+            echo "Descargando la última imagen de Docker..."
+            sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest:latest
+
+            # Ejecutar contenedor con las variables secretas
+            echo "Desplegando el servicio con Docker..."
+            sudo docker run -d \
+              --name locations-delete-service \
+              -e DB_HOST_L_P=${{ secrets.DB_HOST_L_P }} \
+              -e DB_USER=${{ secrets.DB_USER_L_P }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_NAME_L_P=${{ secrets.DB_NAME_L_P }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              --restart always \
+              ${{ secrets.DOCKER_HUB_USERNAME }}/locations-delete-service:latest:latest
+
+            # Verificar si el contenedor está corriendo
+            echo "Verificando contenedor en ejecución..."
+            sudo docker ps | grep locations-delete-service
+            
