@@ -32,5 +32,4 @@ async function startListener() {
     console.error('Error al conectar con RabbitMQ:', error);
   }
 }
-
 startListener();
