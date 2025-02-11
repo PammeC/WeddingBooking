@@ -40,7 +40,7 @@ jobs:
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest ./Provinces-Locations/microservice-locations-create
       - name: Push Docker Image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
-      - name: Deploy with Docker Compose
+      - name: Deploy to EC2 with Docker
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST_LOCATIONS_CREATE }}
@@ -58,50 +58,29 @@ jobs:
               sudo usermod -a -G docker $(whoami)
             fi
 
-            # Instalar Docker Compose si no está presente
-            if ! command -v docker-compose &> /dev/null; then
-              echo "==> Instalando Docker Compose"
-              sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-              sudo chmod +x /usr/local/bin/docker-compose
-            fi
-
-            # Crear docker-compose.yml dinámicamente con variables secretas
-            echo "Creando docker-compose.yml..."
-            cat > docker-compose.yml <<EOL
-            version: '3.8'
-            services:
-              locations-create-service:
-                image: ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
-                container_name: locations-create-service
-                restart: always
-                environment:
-                  PORT: 4003
-                  DB_HOST: ${{ secrets.DB_HOST_L_P }}
-                  DB_USER: ${{ secrets.DB_USER_L_P }}
-                  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-                  DB_NAME_L_P: ${{ secrets.DB_NAME_L_P }}
-                  DB_PORT: ${{ secrets.DB_PORT }}
-                ports:
-                  - "4003:4003"
-                networks:
-                  - locations-create-network
-            networks:
-              locations-create-network:
-            EOL
-
             # Detener y eliminar contenedores previos correctamente
             echo "Deteniendo y eliminando contenedores previos..."
-            sudo docker-compose down --remove-orphans || true
-            sudo docker rm -f $(docker ps -aq --filter "name=locations-create-service") || true
+            sudo docker stop locations-create-service || true
+            sudo docker rm locations-create-service || true
             sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest || true
 
             # Descargar la última versión de la imagen
             echo "Descargando la última imagen de Docker..."
             sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
 
-            # Levantar los servicios
-            echo "Iniciando el servicio con Docker Compose..."
-            sudo docker-compose up -d
+            # Ejecutar contenedor con las variables secretas
+            echo "Desplegando el servicio con Docker..."
+            sudo docker run -d \
+              --name locations-create-service \
+              -p 4003:4003 \
+              -e PORT=4003 \
+              -e DB_HOST_L_P=${{ secrets.DB_HOST_L_P }} \
+              -e DB_USER=${{ secrets.DB_USER_L_P }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e DB_NAME_L_P=${{ secrets.DB_NAME_L_P }} \
+              -e DB_PORT=${{ secrets.DB_PORT }} \
+              --restart always \
+              ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
 
             # Verificar si el contenedor está corriendo
             echo "Verificando contenedor en ejecución..."
