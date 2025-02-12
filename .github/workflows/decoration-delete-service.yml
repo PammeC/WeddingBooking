@@ -79,7 +79,7 @@ jobs:
               echo "Starting new container..."
               sudo docker run -d \
                 --name delete-decoration-service \
-                -p 8041:8041 \
+                -p 8044:8044 \
                 -e SERVER_PORT=${{ secrets.SERVER_PORT_DELETE_DECORATION }} \
                 -e EUREKA_CLIENT_SERVICE_URL=${{ secrets.EUREKA_CLIENT_SERVICE_URL }} \
                 -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_DECORATION }} \
