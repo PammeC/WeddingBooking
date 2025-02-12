@@ -31,12 +31,12 @@ const resolvers = {
       try {
         const { location_name, province_id } = input;
         
-        // Verificar que los campos requeridos estén presentes
+        // Verify that the required fields are present
         if (!location_name || !province_id) {
           throw new Error('Missing required fields');
         }
 
-        // Verificar que province_id sea un número válido
+        // Verify that province_id is a valid number
         if (!Number.isInteger(province_id) || province_id <= 0) {
           throw new Error('Invalid province_id');
         }

@@ -3,8 +3,6 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schema');
 const cors = require('cors');
 
-
-
 async function startServer() {
   try {
     const app = express();
@@ -23,7 +21,6 @@ async function startServer() {
       },
       context: async ({ req }) => {
         return {
-          // Aquí puedes agregar contexto si es necesario
         };
       }
     });

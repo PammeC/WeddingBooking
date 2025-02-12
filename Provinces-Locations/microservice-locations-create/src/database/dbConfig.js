@@ -12,8 +12,7 @@ const db = mysql.createPool({
   queueLimit: 0
 });
 
-
-// Verificar conexión
+// Verify connection
 db.getConnection()
   .then(connection => {
     console.log('Database connected successfully');
