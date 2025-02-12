@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'Users/delete-user-service/**'
-    branches: ["qa"]
+    branches: ["testMS"]
 
 jobs:
   build-and-test:
