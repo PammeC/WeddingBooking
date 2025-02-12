@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'Users/update-user-service/**'
-    branches: ["qa"]
+    branches: ["testMS"]
 
 jobs:
   build-and-test:
