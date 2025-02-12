@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'Users/login-service/**'
-    branches: ["qa"]
+    branches: ["testMS"]
 
 jobs:
   build-and-test:
