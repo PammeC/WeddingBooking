@@ -29,7 +29,9 @@ jobs:
 
       - name: Rename JAR file
         run: |
-          mv ./photography-service/update-photography/target/photography-service-0.0.1.jar ./photography-service/update-photography/update-photography-service.jar
+          mv ./photography-service/update-photography/target/photography-service-0.0.1.jar \
+             ./photography-service/update-photography/update-photography-service.jar
+
   dockerize-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -48,42 +50,54 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest ./photography-service/update-photography
           docker push ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest
-      - name: Deploy to EC2
+
+      - name: Deploy to EC2 (Amazon Linux 2023)
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST_PHOTOGRAPHY }}
-          username: ${{ secrets.EC2_USER }}
+          username: ${{ secrets.EC2_USER_L }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-              # Instalar Docker si no está instalado
-              if ! command -v docker &> /dev/null; then
-                echo "==> Installing Docker"
-                sudo apt-get update -y
-                sudo apt-get install -y docker.io
-                sudo systemctl start docker
-                sudo systemctl enable docker
-                sudo usermod -a -G docker $(whoami)
-              fi
-              # Detener y eliminar cualquier contenedor en ejecución con el mismo nombre
-              echo "Stopping and removing existing container..."
-              sudo docker stop update-photography-service || true
-              sudo docker rm update-photography-service || true
-              # Eliminar imagen antigua
-              echo "Removing old Docker image..."
-              sudo docker rmi ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest || true
-              # Descargar nueva imagen
-              echo "Pulling latest Docker image..."
-              sudo docker pull ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest
-              # Ejecutar nuevo contenedor
-              echo "Starting new container..."
-              sudo docker run -d \
-                --name update-photography-service \
-                -p 8053:8053 \
-                -e SERVER_PORT=${{ secrets.SERVER_PORT_UPDATE_PHOTOGRAPHY }} \
-                -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_PHOTOGRAPHY }} \
-                -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_P }} \
-                -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
-                --restart=always \
-                pammec/update-photography-service:latest
-                
+            set -e  # Detener la ejecución en caso de errores
+            echo "🔹 Verificando e instalando Docker en Amazon Linux 2023..."
+
+            # Instalar Docker en Amazon Linux 2023 si no está instalado
+            if ! command -v docker &> /dev/null; then
+              echo "==> Installing Docker"
+              sudo dnf update -y
+              sudo dnf install -y docker
+              sudo systemctl enable docker
+              sudo systemctl start docker
+              sudo usermod -aG docker ec2-user
+            fi
+
+            # Configurar permisos para que ec2-user pueda ejecutar Docker sin sudo
+            if ! groups | grep -q "\bdocker\b"; then
+              echo "==> Agregando ec2-user al grupo docker"
+              sudo usermod -aG docker ec2-user
+              newgrp docker
+            fi
+
+            echo "🔹 Deteniendo y eliminando cualquier contenedor en ejecución..."
+            docker stop update-photography-service || true
+            docker rm update-photography-service || true
+
+            echo "🔹 Eliminando imagen antigua..."
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest || true
+
+            echo "🔹 Descargando nueva imagen desde Docker Hub..."
+            docker pull ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest
+
+            echo "🔹 Iniciando nuevo contenedor..."
+            nohup docker run -d \
+              --name update-photography-service \
+              -p 8053:8053 \
+              -e SERVER_PORT=${{ secrets.SERVER_PORT_UPDATE_PHOTOGRAPHY }} \
+              -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_PHOTOGRAPHY }} \
+              -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_P }} \
+              -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
+              --restart=always \
+              ${{ secrets.DOCKER_USERNAME }}/update-photography-service:latest > docker.log 2>&1 &
+
+            echo "✅ Despliegue completado en Amazon Linux 2023!"
