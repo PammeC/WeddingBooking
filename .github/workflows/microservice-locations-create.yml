@@ -27,7 +27,8 @@ jobs:
 
   dockerize-and-deploy:
     needs: build-and-test
-    runs-on: redhat-latest
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
