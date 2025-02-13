@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'photography-service/update-photography/**'
-    branches: ["qa"]
+    branches: ["test3"]
   pull_request:
     paths:
       - 'photography-service/update-photography/**'
