@@ -39,7 +39,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME_L_P=${DB_NAME_L_P}
       - DB_PORT=3306
-      - RABBITMQ_URL=rabbitmq:5672  # Corregido
+      - RABBITMQ_URL=amqp://admin:admin@rabbitmq:5672
 
   microservice-provinces-get:
     build: ./microservice-provinces-get

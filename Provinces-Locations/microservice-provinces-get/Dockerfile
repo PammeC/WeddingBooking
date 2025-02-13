@@ -1,20 +1,18 @@
 # Usar una imagen base de Node.js
-FROM node:16-alpine
+FROM node:20-alpine
 
 # Crear y establecer el directorio de trabajo
-WORKDIR /usr/src/
+WORKDIR /usr/src/app
 
-# Copiar los archivos de dependencias
+# Copiar package.json e instalar dependencias
 COPY package*.json ./
-
-# Instalar dependencias
 RUN npm install
 
-# Copiar el código fuente
-COPY . .
+# Copiar el resto del código fuente
+COPY src/ ./src/
 
 # Exponer el puerto que usa la aplicación
 EXPOSE 4001
 
 # Comando para iniciar la aplicación
-CMD ["npm", "start"]
+CMD ["node", "src/index.js"]
