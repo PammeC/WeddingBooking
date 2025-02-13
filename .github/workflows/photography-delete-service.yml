@@ -92,7 +92,7 @@ jobs:
             echo "🔹 Iniciando nuevo contenedor..."
             nohup docker run -d \
               --name delete-photography-service \
-              -p 8052:8052 \
+              -p 8054:8054 \
               -e SERVER_PORT=${{ secrets.SERVER_PORT_DELETE_PHOTOGRAPHY }} \
               -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_PHOTOGRAPHY }} \
               -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_P }} \
