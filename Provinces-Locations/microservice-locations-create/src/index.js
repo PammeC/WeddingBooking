@@ -8,7 +8,6 @@ async function startServer() {
   try {
     const app = express();
     app.use(cors());
-
     // Configure Swagger
     setupSwagger(app);
 
