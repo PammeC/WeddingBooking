@@ -4,7 +4,7 @@ on:
   push:
     paths:
       - 'Provinces-Locations/microservice-locations-create/**'
-    branches: ["testMS"]
+    branches: ["qa"]
 
 jobs:
   build-and-test:
