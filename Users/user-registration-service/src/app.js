@@ -4,7 +4,6 @@ const userRoutes = require('./routes/userRoutes'); // Asegúrate de usar la ruta
 
 const app = express();
 
-
 // Middleware
 app.use(bodyParser.json());
 
