@@ -81,12 +81,9 @@ jobs:
                 --name update-photography-service \
                 -p 8053:8053 \
                 -e SERVER_PORT=${{ secrets.SERVER_PORT_UPDATE_PHOTOGRAPHY }} \
-                -e SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME_UPDATE_PHOTOGRAPHY }} \
                 -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_PHOTOGRAPHY }} \
-                -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} \
+                -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_P }} \
                 -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
-                -e SPRING_JPA_DATABASE_PLATFORM=${{ secrets.SPRING_JPA_DATABASE_PLATFORM }} \
-                -e SPRING_JPA_HIBERNATE_DDL_AUTO=${{ secrets.SPRING_JPA_HIBERNATE_DDL_AUTO }} \
                 --restart=always \
                 pammec/update-photography-service:latest
                 
