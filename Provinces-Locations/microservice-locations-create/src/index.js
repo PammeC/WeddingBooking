@@ -4,7 +4,6 @@ const { typeDefs, resolvers } = require('./schema');
 const cors = require('cors');
 const setupSwagger = require('./swaggerConfig'); 
 
-
 async function startServer() {
   try {
     const app = express();
