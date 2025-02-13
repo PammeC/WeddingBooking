@@ -95,6 +95,7 @@ jobs:
               -p 8054:8054 \
               -e SERVER_PORT=${{ secrets.SERVER_PORT_DELETE_PHOTOGRAPHY }} \
               -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_PHOTOGRAPHY }} \
+              -e EUREKA_CLIENT_SERVICE_URL=${{ secrets.EUREKA_CLIENT_SERVICE_URL }} \
               -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_P }} \
               -e SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} \
               --restart=always \
