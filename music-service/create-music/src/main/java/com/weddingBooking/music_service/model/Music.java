@@ -1,11 +1,13 @@
 package com.weddingBooking.music_service.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
+@Schema(description = "Music entity that represents a service in the system")
 public class Music {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
