@@ -6,7 +6,8 @@ const cors = require('cors'); // Importar cors
 async function startServer() {
   const app = express();
 
-  // Habilitar CORS
+
+  // CORS
   app.use(cors());
 
   const server = new ApolloServer({

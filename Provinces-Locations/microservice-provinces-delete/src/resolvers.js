@@ -15,6 +15,7 @@ const resolvers = {
           return `No se encontró la provincia con ID ${province_id}`;
         }
 
+        
         // Publicar el evento en RabbitMQ
         const connection = await amqp.connect(process.env.RABBITMQ_URL);
         const channel = await connection.createChannel();
