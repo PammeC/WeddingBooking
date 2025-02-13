@@ -9,7 +9,7 @@ async function startServer() {
     const app = express();
     app.use(cors());
 
-    // Configurar Swagger
+    // Configure Swagger
     setupSwagger(app);
 
     const server = new ApolloServer({

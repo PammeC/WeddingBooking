@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: redhat-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,7 +28,6 @@ jobs:
   dockerize-and-deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -52,9 +51,10 @@ jobs:
             # Instalar Docker si no está presente
             if ! command -v docker &> /dev/null; then
               echo "==> Instalando Docker"
-              sudo yum update -y
-              sudo yum install -y docker
-              sudo systemctl enable --now docker
+              sudo apt-get update -y
+              sudo apt-get install -y docker.io
+              sudo systemctl start docker
+              sudo systemctl enable docker
               sudo usermod -a -G docker $(whoami)
             fi
 
