@@ -12,12 +12,13 @@ async function startListener() {
 
     console.log(`Esperando mensajes en la cola: ${queue}`);
 
+    
     channel.consume(queue, async (message) => {
       if (message !== null) {
         const { province_id } = JSON.parse(message.content.toString());
         console.log(`Evento recibido: Provincia eliminada con ID ${province_id}`);
 
-        // Eliminar ubicaciones asociadas a la provincia
+        // Delete ubicaciones asociadas a la provincia
         try {
           const [result] = await db.query('DELETE FROM locations WHERE province_id = ?', [province_id]);
           console.log(`Ubicaciones eliminadas: ${result.affectedRows}`);
@@ -32,5 +33,4 @@ async function startListener() {
     console.error('Error al conectar con RabbitMQ:', error);
   }
 }
-
 startListener();

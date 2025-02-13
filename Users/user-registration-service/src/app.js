@@ -4,8 +4,10 @@ const userRoutes = require('./routes/userRoutes'); // Asegúrate de usar la ruta
 
 const app = express();
 
+
 // Middleware
 app.use(bodyParser.json());
+
 
 // Rutes
 app.use('/api', userRoutes); // Todas las rutas tendrán el prefijo /api

@@ -11,6 +11,7 @@ const server = new ApolloServer({
   resolvers,
 });
 
+
 server.start().then(() => {
   server.applyMiddleware({ app });
 
