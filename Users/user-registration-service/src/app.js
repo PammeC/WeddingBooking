@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes'); // Asegúrate de usar la ruta correcta
 
 const app = express();
-
 // Middleware
 app.use(bodyParser.json());
 
