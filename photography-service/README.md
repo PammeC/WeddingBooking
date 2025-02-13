@@ -4,7 +4,7 @@
 
 The **Photography Service** module is part of the Wedding Booking system. It provides functionality to manage photography services for events, including creating, updating, and deleting photography packages, assigning photographers, and integrating with external providers.
 
-![Screenshot](https://via.placeholder.com/800x400) <!-- Replace with an actual project screenshot -->
+
 
 ---
 

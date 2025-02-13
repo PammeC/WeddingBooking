@@ -4,7 +4,7 @@
 
 The **Music Service** module is part of the Wedding Booking system. It provides functionality to manage music services for events, including creating, updating, and deleting music options, assigning playlists, and integrating with external providers.
 
-![Screenshot](https://via.placeholder.com/800x400) <!-- Replace with an actual project screenshot -->
+
 
 ---
 
