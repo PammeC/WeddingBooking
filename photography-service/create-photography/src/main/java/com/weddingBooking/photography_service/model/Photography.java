@@ -1,24 +1,31 @@
 package com.weddingBooking.photography_service.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 
 @Entity
+@Table(name = "photography")
+
 public class Photography {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_photograhy;
-    private String name;
-    private Double price;
+    @Column(name = "id_photography")
+    private Long idPhotography;
 
-    public Long getId_photograhy() {
-        return id_photograhy;
+    @Column(name = "name", nullable = false, length = 255)
+    private String name;
+
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
+
+    public Long getIdPhotography() {
+        return idPhotography;
     }
 
-    public void setId_photograhy(Long id_photograhy) {
-        this.id_photograhy = id_photograhy;
+    public void setIdPhotography(Long idPhotography) {
+        this.idPhotography = idPhotography;
     }
 
     public String getName() {
@@ -29,19 +36,19 @@ public class Photography {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     public Photography() {
     }
 
-    public Photography(Long id_photograhy, String name, Double price) {
-        this.id_photograhy = id_photograhy;
+    public Photography(Long idPhotography, String name, BigDecimal price) {
+        this.idPhotography = idPhotography;
         this.name = name;
         this.price = price;
     }
