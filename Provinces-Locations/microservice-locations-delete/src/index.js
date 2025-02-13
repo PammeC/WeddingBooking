@@ -11,7 +11,6 @@ async function startListener() {
     await channel.assertQueue(queue, { durable: true });
 
     console.log(`Esperando mensajes en la cola: ${queue}`);
-
     
     channel.consume(queue, async (message) => {
       if (message !== null) {
