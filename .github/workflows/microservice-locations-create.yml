@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: redhat-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
 
   dockerize-and-deploy:
     needs: build-and-test
-    runs-on: ubuntu-latest
+    runs-on: redhat-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to EC2 with Docker
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.EC2_HOST_LOCATIONS_CREATE }}
+          host: ${{ secrets.EC2_HOST_UBICATIONS }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY_M }}
           port: 22
@@ -51,10 +51,9 @@ jobs:
             # Instalar Docker si no está presente
             if ! command -v docker &> /dev/null; then
               echo "==> Instalando Docker"
-              sudo apt-get update -y
-              sudo apt-get install -y docker.io
-              sudo systemctl start docker
-              sudo systemctl enable docker
+              sudo yum update -y
+              sudo yum install -y docker
+              sudo systemctl enable --now docker
               sudo usermod -a -G docker $(whoami)
             fi
 
