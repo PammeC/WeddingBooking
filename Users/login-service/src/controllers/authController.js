@@ -58,6 +58,8 @@ exports.loginUser = async (req, res) => {
       token: token, // Devuelve el token al cliente
       redirectUrl: redirectUrl, // Devuelve la URL de redirección
     });
+
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error al procesar la solicitud' });
