@@ -31,49 +31,45 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
       - name: Build Docker Image
         run: docker build -t ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest ./Provinces-Locations/microservice-locations-create
-
       - name: Push Docker Image to Docker Hub
         run: docker push ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
-
       - name: Deploy to EC2 with Docker
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.EC2_HOST_UBICATIONS }}
-          username: ec2-user  # Corregido para Red Hat/Amazon Linux
+          username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY_M }}
           port: 22
           script: |
-            # Detectar si Docker está instalado
+            # Instalar Docker si no está presente
             if ! command -v docker &> /dev/null; then
-              echo "==> Instalando Docker en Red Hat/Amazon Linux"
-              sudo yum update -y
-              sudo yum install -y docker
+              echo "==> Instalando Docker"
+              sudo apt-get update -y
+              sudo apt-get install -y docker.io
               sudo systemctl start docker
               sudo systemctl enable docker
-              sudo usermod -aG docker ec2-user
+              sudo usermod -a -G docker $(whoami)
             fi
 
             # Detener y eliminar contenedores previos correctamente
-            echo "==> Deteniendo y eliminando contenedores previos..."
+            echo "Deteniendo y eliminando contenedores previos..."
             sudo docker stop locations-create-service || true
             sudo docker rm locations-create-service || true
             sudo docker rmi -f ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest || true
 
             # Descargar la última versión de la imagen
-            echo "==> Descargando la última imagen de Docker..."
+            echo "Descargando la última imagen de Docker..."
             sudo docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
 
             # Ejecutar contenedor con las variables secretas
-            echo "==> Desplegando el servicio con Docker..."
+            echo "Desplegando el servicio con Docker..."
             sudo docker run -d \
               --name locations-create-service \
               -p 4003:4003 \
@@ -87,5 +83,5 @@ jobs:
               ${{ secrets.DOCKER_HUB_USERNAME }}/locations-create-service:latest
 
             # Verificar si el contenedor está corriendo
-            echo "==> Verificando contenedor en ejecución..."
+            echo "Verificando contenedor en ejecución..."
             sudo docker ps | grep locations-create-service

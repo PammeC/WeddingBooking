@@ -11,6 +11,7 @@ async function startServer() {
     // Configure Swagger
     setupSwagger(app);
 
+    
     const server = new ApolloServer({
       typeDefs,
       resolvers,
