@@ -92,7 +92,7 @@ jobs:
             echo "🔹 Iniciando nuevo contenedor..."
             nohup docker run -d \
               --name update-photography-service \
-              -p 8051:8051 \
+              -p 8053:8053 \
               -e SERVER_PORT=${{ secrets.SERVER_PORT_UPDATE_PHOTOGRAPHY }} \
               -e SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL_PHOTOGRAPHY }} \
               -e SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME_P }} \
