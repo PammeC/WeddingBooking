@@ -2,31 +2,49 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schema');
 const cors = require('cors');
-const bodyParser = require('body-parser'); // Importa body-parser
+const setupSwagger = require('./swaggerConfig'); 
 
 async function startServer() {
-  const app = express();
-  app.use(cors());
-  app.use(bodyParser.json()); // Agrega el middleware para procesar JSON
+  try {
+    const app = express();
+    app.use(cors());
 
-  const server = new ApolloServer({ 
-    typeDefs, 
-    resolvers,
-    formatError: (error) => {
-      console.error('GraphQL Error:', error);
-      return error;
-    }
-  });
+    // Configurar Swagger
+    setupSwagger(app);
 
-  await server.start();
-  server.applyMiddleware({ app, path: '/graphql' });
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      formatError: (error) => {
+        console.error('GraphQL Error:', error);
+        return {
+          message: error.message,
+          locations: error.locations,
+          path: error.path,
+        };
+      },
+      context: async ({ req }) => {
+        return {
+          // Aquí puedes agregar contexto si es necesario
+        };
+      },
+    });
 
-  const PORT = 4003;
-  app.listen(PORT, () => {
-    console.log(`🚀 Locations Create service running on http://localhost:${PORT}/graphql`);
-  });
+    await server.start();
+    server.applyMiddleware({ app, path: '/graphql' });
+
+    const PORT = 4003;
+    app.listen(PORT, () => {
+      console.log(`🚀 Locations Create service running on http://localhost:${PORT}/graphql`);
+      console.log(`📄 Swagger UI available at http://localhost:${PORT}/api-docs`);
+    });
+  } catch (error) {
+    console.error('Failed to start server:', error);
+    process.exit(1);
+  }
 }
 
-startServer().catch(error => {
+startServer().catch((error) => {
   console.error('Error starting server:', error);
+  process.exit(1);
 });
