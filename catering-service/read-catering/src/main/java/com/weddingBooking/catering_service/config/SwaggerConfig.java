@@ -11,8 +11,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Create Catering Service API")
+                        .title("Read Catering Service API")
                         .version("1.0")
-                        .description("API for create catering services in WeddingBooking"));
+                        .description("API for read catering services in WeddingBooking"));
     }
 }

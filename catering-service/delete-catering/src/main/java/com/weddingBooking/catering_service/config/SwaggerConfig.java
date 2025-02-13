@@ -13,6 +13,6 @@ public class SwaggerConfig {
                 .info(new Info()
                         .title("Create Catering Service API")
                         .version("1.0")
-                        .description("API for creating catering services in WeddingBooking"));
+                        .description("API for delete catering services in WeddingBooking"));
     }
 }
