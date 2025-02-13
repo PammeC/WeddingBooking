@@ -19,7 +19,7 @@ public class SwaggerConfig {
                         .version("1.0")
                         .description("API for reading music services in WeddingBooking using GraphQL"))
                 .servers(List.of(
-                        new Server().url("http://44.208.178.247:8042").description("EC2 Production Server")
+                        new Server().url("http://54.173.57.181:8062").description("EC2 Production Server")
                 ));
     }
 }

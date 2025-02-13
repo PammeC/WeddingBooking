@@ -15,7 +15,7 @@ import java.util.Map;
 @Tag(name = "GraphQL API", description = "GraphQL Endpoints for Music Services")
 public class GraphQLSwaggerController {
 
-    private final String GRAPHQL_URL = "http://44.208.178.247:8062/graphql";
+    private final String GRAPHQL_URL = "http://54.173.57.181:8062/graphql";
 
     @PostMapping
     @Operation(summary = "Execute GraphQL Query", description = "Send a GraphQL query to the server")
