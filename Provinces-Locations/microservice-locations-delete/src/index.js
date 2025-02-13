@@ -2,7 +2,6 @@ const amqp = require('amqplib');
 const db = require('./database/dbConfig');
 require('dotenv').config();
 
-
 async function startListener() {
   try {
     const connection = await amqp.connect(process.env.RABBITMQ_URL);
