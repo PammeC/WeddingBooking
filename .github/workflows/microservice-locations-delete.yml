@@ -43,7 +43,7 @@ jobs:
       - name: Deploy to EC2 (Without Docker Compose)
         uses: appleboy/ssh-action@v0.1.8
         with:
-          host: ${{ secrets.EC2_HOST_LOCATIONS_DELETE }}
+          host: ${{ secrets.EC2_HOST_UBICATIONS }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY_M }}
           port: 22
