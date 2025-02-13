@@ -12,7 +12,6 @@ async function startListener() {
 
     console.log(`Esperando mensajes en la cola: ${queue}`);
 
-    
     channel.consume(queue, async (message) => {
       if (message !== null) {
         const { province_id } = JSON.parse(message.content.toString());
