@@ -13,6 +13,7 @@ const corsOptions = {
     credentials: true
 };
 
+
 // CORS Middleware
 app.use(cors(corsOptions));
 
