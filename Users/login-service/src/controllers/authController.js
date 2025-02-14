@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 // Load secret key from environment variables
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
+
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
