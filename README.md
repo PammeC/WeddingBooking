@@ -7,6 +7,9 @@ A **microservices-based** event booking platform for **weddings**, deployed on *
 The **Wedding Booking System** is a fully functional **event reservation platform** that allows users to book **catering, music, decoration, and photography** services for weddings.
 
 This project follows a **microservices architecture**, running **27 independent services**, all containerized with **Docker** and orchestrated in **AWS**.
+---
+
+![Diagrama de arquitectura](image.png "Diagrama de arquitectura")
 
 ---
 
