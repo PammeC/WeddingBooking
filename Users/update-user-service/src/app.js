@@ -7,6 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Rutes
+
 app.use('/api', userRoutes);
 
 module.exports = app;
