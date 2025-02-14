@@ -9,7 +9,7 @@ app.use(cors());
 
 // Configuración más específica de CORS
 const corsOptions = {
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000','http://13.216.230.146'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
