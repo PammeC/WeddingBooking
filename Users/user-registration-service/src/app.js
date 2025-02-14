@@ -7,6 +7,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Rutes
+
 app.use('/api', userRoutes); // Todas las rutas tendrán el prefijo /api
 
 module.exports = app;
