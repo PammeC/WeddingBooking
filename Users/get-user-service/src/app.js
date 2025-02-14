@@ -16,6 +16,7 @@ const corsOptions = {
 // Aplicar CORS con las opciones configuradas
 app.use(cors(corsOptions));
 
+
 // Middleware
 app.use(bodyParser.json());
 

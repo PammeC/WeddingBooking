@@ -15,6 +15,7 @@ const corsOptions = {
     credentials: true
   };
   
+  
 // Middleware
 app.use(bodyParser.json());
 
