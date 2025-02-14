@@ -87,7 +87,7 @@ jobs:
                     DB_NAME: ${{ secrets.DB_NAME }}
                     DB_PORT: ${{ secrets.DB_PORT }}
                   ports:
-                    - "3000:3000"
+                    - "3003:3003"
                   networks:
                     - update-network
               networks:
