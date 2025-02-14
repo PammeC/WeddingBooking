@@ -80,14 +80,14 @@ jobs:
                   image: ${{ secrets.DOCKER_HUB_USERNAME }}/update-user-service:latest
                   container_name: update-user-service-1
                   environment:
-                    PORT: ${{ secrets.PORT3000 }}
+                    PORT: ${{ secrets.PORT3003 }}
                     DB_HOST: ${{ secrets.DB_HOST }}
                     DB_USER: ${{ secrets.DB_USER }}
                     DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
                     DB_NAME: ${{ secrets.DB_NAME }}
                     DB_PORT: ${{ secrets.DB_PORT }}
                   ports:
-                    - "3000:3000"
+                    - "3003:3003"
                   networks:
                     - update-network
               networks:
