@@ -4,7 +4,7 @@ const { getAllUsers, getUserById } = require('../controllers/userController');
 const router = express.Router();
 
 
-router.get('/users', getAllUsers); // Obtener todos los usuarios
-router.get('/users/:id', getUserById); // Obtener un usuario por ID
+router.get('/users', getAllUsers); // Get all users
+router.get('/users/:id', getUserById); // Get a user by ID
 
 module.exports = router;

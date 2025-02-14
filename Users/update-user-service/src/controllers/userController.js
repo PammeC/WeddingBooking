@@ -30,7 +30,7 @@ exports.updateUser = async (req, res) => {
       values.push(hashedPassword);
     }
 
-    values.push(id); // Agregar el ID del usuario al final para la cláusula WHERE
+    values.push(id); // Add ID to user for clausule WHERE
 
     const query = `UPDATE users SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
     const [result] = await db.query(query, values);
