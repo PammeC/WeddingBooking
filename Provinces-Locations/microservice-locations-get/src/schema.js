@@ -2,7 +2,7 @@
 const { gql } = require('apollo-server-express');
 const db = require('./database/dbConfig');
 
-// Definimos el esquema GraphQL
+// We define the GraphQL schema
 const typeDefs = gql`
   type Location {
     location_id: ID!
@@ -47,7 +47,7 @@ const resolvers = {
           province_id: row.province_id
         }));
       }
-      // Si no hay filtro, retorna todas
+      // If there is no filter, return all
       const [rows] = await db.query('SELECT * FROM locations');
       return rows.map(row => ({
         location_id: row.location_id,

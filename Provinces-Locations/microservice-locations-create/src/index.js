@@ -8,7 +8,7 @@ async function startServer() {
   try {
     const app = express();
     app.use(cors());
-    // Configure Swagger
+    
     setupSwagger(app);
 
     const server = new ApolloServer({
@@ -24,7 +24,7 @@ async function startServer() {
       },
       context: async ({ req }) => {
         return {
-          // Aquí puedes agregar contexto si es necesario
+          
         };
       },
     });
