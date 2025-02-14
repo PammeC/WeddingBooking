@@ -1,19 +1,20 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Asegúrate de importar cors
 const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// CORS Middleware
-app.use(cors());
-
-// Configuración más específica de CORS
+// Configuración de CORS
 const corsOptions = {
-    origin: ['http://localhost:3000','http://13.216.230.146'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-  };
+    origin: ['http://localhost:3000'], // Permitir solicitudes desde este origen
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
+    credentials: true, // Permitir envío de cookies o credenciales
+};
+
+// Aplicar CORS con las opciones configuradas
+app.use(cors(corsOptions));
 
 // Middleware
 app.use(bodyParser.json());
