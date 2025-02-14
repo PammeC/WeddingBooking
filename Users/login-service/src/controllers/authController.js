@@ -12,7 +12,7 @@ exports.loginUser = async (req, res) => {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
-  
+
   try {
     // Search the user by email
     const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
@@ -47,7 +47,7 @@ exports.loginUser = async (req, res) => {
       redirectUrl = '/default-dashboard';
     }
 
-    // Respuesta exitosa
+    
     res.status(200).json({
       message: 'Inicio de sesión exitoso',
       user: {
