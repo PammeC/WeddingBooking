@@ -5,6 +5,7 @@ const userRoutes = require("./routes/userRoutes")
 
 const app = express()
 
+
 // CORS configuration
 app.use(cors())
 
