@@ -17,6 +17,7 @@ const corsOptions = {
 // CORS Middleware
 app.use(cors(corsOptions)); 
 
+
 // Middleware
 app.use(bodyParser.json());
 
