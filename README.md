@@ -8,8 +8,9 @@ The **Wedding Booking System** is a fully functional **event reservation platfor
 
 This project follows a **microservices architecture**, running **27 independent services**, all containerized with **Docker** and orchestrated in **AWS**.
 ---
+## Architecture Diagram 🏗️
 
-![Diagrama de arquitectura](image.png "Diagrama de arquitectura")
+![Architecture Diagram](image.png "Architecture Diagram")
 
 ---
 
