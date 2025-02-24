@@ -2,8 +2,9 @@ const db = require('../config/db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Cargar la clave secreta desde las variables de entorno
+// Load secret key from environment variables
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
+
 
 exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -12,8 +13,9 @@ exports.loginUser = async (req, res) => {
     return res.status(400).json({ message: 'Todos los campos son obligatorios' });
   }
 
+
   try {
-    // Buscar el usuario por correo electrónico
+    // Search the user by email
     const [rows] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
 
     if (rows.length === 0) {
@@ -22,21 +24,21 @@ exports.loginUser = async (req, res) => {
 
     const user = rows[0];
 
-    // Comparar la contraseña ingresada con la contraseña encriptada
+    // Compare the entered password with the encrypted password
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ message: 'Credenciales incorrectas' });
     }
 
-    // Generar un token JWT que incluye el rol del usuario
+    // Generate token JWT with user rol 
     const token = jwt.sign(
       { userId: user.id, username: user.username, role: user.role },
       JWT_SECRET,
       { expiresIn: '1h' }
     );
 
-    // Determinar la URL de redirección según el rol
+    
     let redirectUrl;
     if (user.role === 'administrator') {
       redirectUrl = '/admin-dashboard';
@@ -46,7 +48,7 @@ exports.loginUser = async (req, res) => {
       redirectUrl = '/default-dashboard';
     }
 
-    // Respuesta exitosa
+    
     res.status(200).json({
       message: 'Inicio de sesión exitoso',
       user: {
@@ -55,8 +57,8 @@ exports.loginUser = async (req, res) => {
         email: user.email,
         role: user.role,
       },
-      token: token, // Devuelve el token al cliente
-      redirectUrl: redirectUrl, // Devuelve la URL de redirección
+      token: token, // Return the token to the client
+      redirectUrl: redirectUrl, // Returns the redirect URL
     });
   } catch (error) {
     console.error(error);

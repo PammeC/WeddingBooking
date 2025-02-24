@@ -5,10 +5,11 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
+
 // CORS Middleware
 app.use(cors());
 
-// Configuración más específica de CORS
+// More specific CORS settings
 const corsOptions = {
     origin: ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],

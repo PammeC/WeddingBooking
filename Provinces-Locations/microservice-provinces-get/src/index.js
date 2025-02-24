@@ -6,7 +6,6 @@ const cors = require('cors'); // Importar cors
 async function startServer() {
   const app = express();
 
-
   // CORS
   app.use(cors());
 

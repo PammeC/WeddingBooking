@@ -7,6 +7,16 @@ A **microservices-based** event booking platform for **weddings**, deployed on *
 The **Wedding Booking System** is a fully functional **event reservation platform** that allows users to book **catering, music, decoration, and photography** services for weddings.
 
 This project follows a **microservices architecture**, running **27 independent services**, all containerized with **Docker** and orchestrated in **AWS**.
+---
+## Architecture Diagram 🏗️
+
+![Architecture Diagram](image.png "Architecture Diagram")
+
+---
+
+## 🎥 Video de Presentación
+Puedes ver la presentación del proyecto en el siguiente enlace:
+[Ver Video](https://uceedu.sharepoint.com/:v:/s/Presentaciones2/EYb5SYSCHI5Igx6gNPkQL9QB6HeWyczvFOosQoKlGxRsVA?e=cOqDkS&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJTdHJlYW1XZWJBcHAiLCJyZWZlcnJhbFZpZXciOiJTaGFyZURpYWxvZy1MaW5rIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXcifX0%3D)
 
 ---
 
@@ -107,3 +117,6 @@ Create Service: POST http://3.229.141.153:8051/photographyC/create
 List Services: POST http://3.229.141.153:8052/graphql
 Update Service: PUT http://3.229.141.153:8053/photographyU/update/{id}
 Delete Service: DELETE http://3.229.141.153:8054/photographyD/delete/{id}
+```
+
+

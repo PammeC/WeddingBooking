@@ -7,7 +7,7 @@ const cors = require('cors'); // Import cors
 async function startServer() {
   const app = express();
 
-  // Habilitar CORS
+  // Hability CORS
   app.use(cors());
   const server = new ApolloServer({
     typeDefs,
@@ -22,5 +22,6 @@ async function startServer() {
     console.log(`Locations service running on http://localhost:${PORT}/graphql`);
   });
 }
+
 
 startServer();

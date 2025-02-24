@@ -5,7 +5,8 @@ const userRoutes = require("./routes/userRoutes")
 
 const app = express()
 
-// Configuración de CORS más permisiva para desarrollo
+
+// CORS configuration
 app.use(cors())
 
 // Middleware

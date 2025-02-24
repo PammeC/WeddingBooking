@@ -6,7 +6,7 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
-// Configuración de CORS
+// CORS configuration
 const corsOptions = {
     origin: ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
